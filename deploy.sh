@@ -13,9 +13,7 @@ git add -A
 git commit -m "Deploy Vue app to GitHub Pages"
 
 # Push to gh-pages branch
-git push -f <repo-url> master:gh-pages
+git push -f https://github.com/RageQxeen/vue-pages.git master:gh-pages
 
 # Go back to project root
 cd -
-
-chmod +x deploy.sh
