@@ -33,7 +33,7 @@ export default {
           {
             headers: {
               'x-rapidapi-host': 'quotes15.p.rapidapi.com',
-              'x-rapidapi-key': '[YOUR RAPIDAPI KEY HERE]'
+              'x-rapidapi-key': 'cfbf7ab917mshe9d31d3847c007ap176634jsnbbaf84466285'
             }
           }
         )
