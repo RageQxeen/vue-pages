@@ -1,26 +1,73 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app" class="container">
+    <h1>Random Quote Generator</h1>
+
+    <!-- Display the quote or a loading message -->
+    <p v-if="loading">Loading...</p>
+    <p v-else>"{{ quote }}"</p>
+    <p class="author">— {{ author }}</p>
+
+    <!-- Button to get a new quote -->
+    <button @click="getQuote">Get New Quote</button>
+  </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  data() {
+    return {
+      quote: '',
+      author: '',
+      loading: false
+    }
+  },
+  methods: {
+    async getQuote() {
+      this.loading = true
+      try {
+        const response = await axios.get(
+          'https://quotes15.p.rapidapi.com/quotes/random/?language_code=en',
+          {
+            headers: {
+              'x-rapidapi-host': 'quotes15.p.rapidapi.com',
+              'x-rapidapi-key': '[YOUR RAPIDAPI KEY HERE]'
+            }
+          }
+        )
+        this.quote = response.data.content
+        this.author = response.data.originator.name
+      } catch (error) {
+        console.error(error)
+        this.quote = 'Oops! Something went wrong.'
+        this.author = ''
+      } finally {
+        this.loading = false
+      }
+    }
+  },
+  mounted() {
+    this.getQuote()
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.container {
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: Arial, sans-serif;
+  margin-top: 50px;
+}
+button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+}
+.author {
+  font-style: italic;
+  color: #555;
+  margin-top: 5px;
 }
 </style>
